@@ -1,0 +1,45 @@
+#!/bin/bash
+
+URL="http://169.254.169.254/latest/meta-data/"
+
+which curl > /dev/null 2>&1
+if [ $? == 0 ]; then
+  get_cmd="curl -s"
+else
+  get_cmd="wget -q -O -"
+fi
+
+
+get () {
+    $get_cmd $URL/$1
+}
+
+data_items=(ami-id
+            hostname
+            instance-id
+            instance-type
+            local-hostname
+            local-ipv4
+            public-hostname
+            public-ipv4
+            public-keys/
+            security-groups
+            placement/availability-zone
+            services/
+            )
+
+
+yaml=""
+
+for meta_thing in ${data_items[*]}; do
+    data=$(get $meta_thing)
+    entry=$(printf "%-30s%s" "$meta_thing:" "$data\n")
+    yaml="$yaml$entry"
+done
+
+echo
+
+echo "# There are other metadata elements: do $get_cmd $URL to list them."
+echo -e "# You can also do\n#  $get_cmd http://s3.amazonaws.com/ec2metadata/ec2-metadata | bash\n# to get the output of AWS's tool."
+echo
+echo -e "$yaml"
