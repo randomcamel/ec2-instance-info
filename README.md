@@ -3,6 +3,8 @@ A Bash script to get EC2 instance metadata while you're on the instance, as YAML
 
 This is similar to [the native query tool](https://aws.amazon.com/code/1825) (download it [here](http://s3.amazonaws.com/ec2metadata/ec2-metadata)), but ignores stuff you probably don't care about, outputs pure YAML, and is easier to read.
 
+Since it's just the one script, there's probably no point in cloning the repo; you can just download the script directly from [the GitHub raw link](https://raw.githubusercontent.com/randomcamel/ec2-instance-info/master/instance-info).
+
 ```shell
 ubuntu@ip-172-31-6-155:~$ ./instance-info
 
